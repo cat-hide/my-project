@@ -1,41 +1,202 @@
-body {
-  background-color: #f0f4f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* ========== 基础样式 ========== */
+* {
   margin: 0;
-  font-family: sans-serif;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.card {
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+
+/* ========== 容器卡片 ========== */
+.container {
   background: white;
-  padding: 40px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 90vw;
+  padding: 36px 32px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  align-self: flex-start;
 }
 
 h1 {
+  text-align: center;
   color: #2c3e50;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
+  font-size: 26px;
 }
 
-p {
-  color: #666;
+/* ========== 输入区 ========== */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 24px;
-  background-color: #3498db;
+.input-group input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #667eea;
+}
+
+.input-group button {
+  padding: 12px 24px;
+  background: #667eea;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
+  font-size: 15px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background 0.2s;
 }
 
-button:hover {
-  background-color: #2980b9;
+.input-group button:hover {
+  background: #5a67d8;
+}
+
+/* ========== 统计信息 ========== */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  color: #a0aec0;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* ========== 过滤按钮 ========== */
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 8px 0;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #718096;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* ========== 任务列表 ========== */
+#todoList {
+  list-style: none;
+}
+
+#todoList li {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+#todoList li:hover {
+  background: #f7fafc;
+}
+
+/* 复选框 */
+#todoList li input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 14px;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+/* 任务文本 */
+#todoList li span {
+  flex: 1;
+  font-size: 15px;
+  color: #2d3748;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+#todoList li span:hover {
+  background: #edf2f7;
+}
+
+/* 编辑输入框 */
+.edit-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 2px solid #667eea;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  color: #2d3748;
+}
+
+/* 已完成的任务 — 划线 */
+#todoList li.done span {
+  text-decoration: line-through;
+  color: #a0aec0;
+}
+
+/* 删除按钮 */
+#todoList li .del-btn {
+  padding: 4px 10px;
+  background: transparent;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#todoList li:hover .del-btn {
+  opacity: 1;
+}
+
+#todoList li .del-btn:hover {
+  background: #e53e3e;
+  color: white;
+}
+
+/* ========== 清空按钮 ========== */
+.clear-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  background: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #fed7d7;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-btn:hover {
+  background: #fed7d7;
 }
