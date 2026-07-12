@@ -1,0 +1,27 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "这是我的第一个 GitHub 仓库，用 CodeBuddy 创建。\r 测试修改",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cat-hide/my-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cat-hide/my-project/issues"
+  },
+  "homepage": "https://github.com/cat-hide/my-project#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.2.0",
+    "sql.js": "^1.14.1"
+  }
+}

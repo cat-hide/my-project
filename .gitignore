@@ -1,0 +1,7 @@
+node_modules/
+data.db
+uploads/
+cert.pem
+key.pem
+*.traineddata
+.DS_Store

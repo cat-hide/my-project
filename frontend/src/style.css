@@ -1,0 +1,417 @@
+/* ========== 基础 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* ========== 顶部标签页 ========== */
+.tabs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 8px 0;
+}
+
+.tab-btn {
+  padding: 12px 32px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.tab-btn:hover { background: rgba(255,255,255,0.35); }
+
+.tab-btn.active {
+  background: white;
+  color: #667eea;
+  border-color: white;
+}
+
+/* ========== 页面切换 ========== */
+.tab-page { display: none; }
+.tab-page.active { display: block; }
+
+/* ========== 容器 ========== */
+.container {
+  background: white;
+  width: 500px;
+  max-width: 92vw;
+  padding: 32px 28px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  margin: 0 auto;
+}
+
+.invoice-container { width: 560px; }
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* ========== 上传区 ========== */
+.upload-zone {
+  border: 3px dashed #cbd5e0;
+  border-radius: 16px;
+  padding: 48px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #f7fafc;
+}
+
+.upload-zone:hover {
+  border-color: #667eea;
+  background: #ebf4ff;
+}
+
+.upload-icon { font-size: 52px; margin-bottom: 12px; }
+
+.upload-zone p { color: #4a5568; font-size: 15px; }
+.upload-zone .hint { color: #a0aec0; font-size: 13px; margin-top: 6px; }
+
+/* ========== 录入方式选择 ========== */
+.upload-methods { display: flex; gap: 12px; }
+
+.method-card {
+  flex: 1;
+  padding: 28px 16px;
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.method-card:hover { border-color: #667eea; background: #ebf4ff; }
+.method-icon { font-size: 40px; margin-bottom: 8px; }
+.method-card p { color: #2d3748; font-size: 15px; font-weight: 600; }
+.method-card .hint { color: #a0aec0; font-size: 12px; font-weight: 400; margin-top: 4px; }
+
+/* ========== 扫码区域 ========== */
+.scanner-box { text-align: center; }
+
+#qrReader {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 16px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#qrReader video { border-radius: 12px; }
+
+.scanner-box .btn-cancel {
+  padding: 10px 32px;
+  margin-top: 0;
+}
+
+/* ========== 加载中 ========== */
+.loading-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 48px; height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-box p { color: #4a5568; font-size: 15px; }
+
+/* ========== 识别结果 ========== */
+.result-box {
+  background: #f7fafc;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.result-box h3 {
+  color: #2c3e50;
+  margin-bottom: 16px;
+  font-size: 17px;
+}
+
+.result-preview {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.result-preview img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.result-fields { display: flex; flex-direction: column; gap: 14px; }
+
+.field { position: relative; }
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: #718096;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.field input:focus { border-color: #667eea; }
+
+.field-status {
+  position: absolute;
+  right: 12px;
+  top: 32px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.field-status.ok { color: #38a169; }
+.field-status.err { color: #e53e3e; }
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-cancel, .btn-save {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancel {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-cancel:hover { background: #cbd5e0; }
+
+.btn-save {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btn-save:hover { opacity: 0.9; }
+
+.btn-ocr {
+  background: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #bee3f8;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-ocr:hover { background: #bee3f8; }
+
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.save-msg {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.save-msg.success { color: #38a169; }
+.save-msg.error { color: #e53e3e; }
+
+/* ========== 发票列表 ========== */
+.invoice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-hint { text-align: center; color: #a0aec0; padding: 24px; }
+
+.invoice-card {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  background: #f7fafc;
+  border-radius: 10px;
+  gap: 14px;
+  transition: background 0.2s;
+}
+
+.invoice-card:hover { background: #edf2f7; }
+
+.invoice-card img {
+  width: 60px; height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.invoice-info { flex: 1; min-width: 0; }
+
+.invoice-info .title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.invoice-info .meta {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-top: 4px;
+}
+
+.invoice-info .amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e53e3e;
+  margin-top: 4px;
+}
+
+.invoice-card .del-invoice {
+  padding: 6px 12px;
+  background: transparent;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.invoice-card:hover .del-invoice { opacity: 1; }
+
+.invoice-card .del-invoice:hover { background: #e53e3e; color: white; }
+
+/* 查重提示 */
+.duplicate-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #ffedd5;
+  color: #c2410c;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* ========== Todo 样式（沿用之前的）========== */
+.input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+.input-group input {
+  flex: 1; padding: 12px 16px;
+  border: 2px solid #e2e8f0; border-radius: 10px;
+  font-size: 15px; outline: none;
+  transition: border 0.2s;
+}
+.input-group input:focus { border-color: #667eea; }
+.input-group button {
+  padding: 12px 24px; background: #667eea;
+  color: white; border: none; border-radius: 10px;
+  font-size: 15px; cursor: pointer;
+}
+.input-group button:hover { background: #5a67d8; }
+
+.stats { display: flex; justify-content: space-between; color: #a0aec0; font-size: 13px; margin-bottom: 14px; }
+
+.filters { display: flex; gap: 8px; margin-bottom: 16px; }
+.filter-btn {
+  flex: 1; padding: 8px 0;
+  background: #f7fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; font-size: 13px;
+  color: #718096; cursor: pointer; transition: all 0.2s;
+}
+.filter-btn.active { background: #667eea; color: white; border-color: #667eea; }
+
+#todoList { list-style: none; }
+#todoList li {
+  display: flex; align-items: center;
+  padding: 14px 12px; border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+#todoList li:hover { background: #f7fafc; }
+#todoList li input[type="checkbox"] {
+  width: 20px; height: 20px; margin-right: 14px;
+  cursor: pointer; accent-color: #667eea;
+}
+#todoList li span {
+  flex: 1; font-size: 15px; color: #2d3748;
+  cursor: pointer; padding: 4px 6px; border-radius: 4px;
+}
+#todoList li span:hover { background: #edf2f7; }
+#todoList li.done span { text-decoration: line-through; color: #a0aec0; }
+.edit-input {
+  flex: 1; padding: 6px 8px;
+  border: 2px solid #667eea; border-radius: 6px;
+  font-size: 15px; outline: none; color: #2d3748;
+}
+
+#todoList li .del-btn {
+  padding: 4px 10px; background: transparent;
+  color: #e53e3e; border: 1px solid #e53e3e;
+  border-radius: 6px; font-size: 13px; cursor: pointer;
+  opacity: 0; transition: opacity 0.2s;
+}
+#todoList li:hover .del-btn { opacity: 1; }
+#todoList li .del-btn:hover { background: #e53e3e; color: white; }
+
+.clear-btn {
+  display: block; width: 100%; margin-top: 16px;
+  padding: 10px; background: #fff5f5; color: #e53e3e;
+  border: 1px solid #fed7d7; border-radius: 10px;
+  font-size: 14px; cursor: pointer; transition: all 0.2s;
+}
+.clear-btn:hover { background: #fed7d7; }
+
+/* ========== 响应式 ========== */
+@media (max-width: 600px) {
+  .container, .invoice-container { max-width: 96vw; padding: 24px 16px; }
+  .tabs { padding: 4px 8px; }
+  .tab-btn { padding: 10px 20px; font-size: 14px; }
+}
