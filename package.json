@@ -21,6 +21,7 @@
   "homepage": "https://github.com/cat-hide/my-project#readme",
   "dependencies": {
     "express": "^5.2.1",
+    "multer": "^2.2.0",
     "sql.js": "^1.14.1"
   }
 }

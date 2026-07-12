@@ -20,7 +20,7 @@ async function initDB() {
     db = new SQL.Database();
   }
 
-  // 创建 todos 表（IF NOT EXISTS 确保不会重复创建）
+  // 创建 todos 表
   db.run(`
     CREATE TABLE IF NOT EXISTS todos (
       id    INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +29,22 @@ async function initDB() {
     )
   `);
 
-  // 把建表操作立即写入硬盘
+  // 创建发票表
+  db.run(`
+    CREATE TABLE IF NOT EXISTS invoices (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      invoice_no  TEXT,
+      title       TEXT,
+      tax_no      TEXT,
+      seller      TEXT,
+      amount      TEXT,
+      date        TEXT,
+      image_path  TEXT,
+      raw_text    TEXT,
+      created_at  TEXT DEFAULT (datetime('now', 'localtime'))
+    )
+  `);
+
   saveToFile();
   console.log('✅ 数据库已就绪：' + DB_PATH);
 }
@@ -126,4 +141,56 @@ function getTodoById(id) {
   return { id: row.id, text: row.text, done: row.done === 1 };
 }
 
-module.exports = { initDB, getAllTodos, addTodo, toggleTodo, deleteTodo, getTodoById, updateTodoText };
+// ========== 9. 发票查重（按发票号码）==========
+function checkDuplicate(invoiceNo) {
+  if (!invoiceNo) return null;
+  const stmt = db.prepare('SELECT id, title, created_at FROM invoices WHERE invoice_no = ?');
+  stmt.bind([invoiceNo]);
+  if (stmt.step()) {
+    const row = stmt.getAsObject();
+    stmt.free();
+    return { id: row.id, title: row.title, created_at: row.created_at };
+  }
+  stmt.free();
+  return null;
+}
+
+// ========== 10. 添加发票记录 ==========
+function addInvoice(data) {
+  db.run(
+    `INSERT INTO invoices (invoice_no, title, tax_no, seller, amount, date, image_path, raw_text)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.invoiceNo || '', data.title || '', data.taxNo || '',
+     data.seller || '', data.amount || '', data.date || '',
+     data.imagePath || '', data.rawText || '']
+  );
+  const result = db.exec('SELECT last_insert_rowid() AS id');
+  const id = result[0].values[0][0];
+  saveToFile();
+  return { id, ...data };
+}
+
+// ========== 11. 获取所有发票 ==========
+function getAllInvoices() {
+  const stmt = db.prepare('SELECT * FROM invoices ORDER BY id DESC');
+  const rows = [];
+  while (stmt.step()) {
+    rows.push(stmt.getAsObject());
+  }
+  stmt.free();
+  return rows;
+}
+
+// ========== 12. 删除发票 ==========
+function deleteInvoice(id) {
+  const stmt = db.prepare('SELECT id FROM invoices WHERE id = ?');
+  stmt.bind([id]);
+  const exists = stmt.step();
+  stmt.free();
+  if (!exists) return false;
+  db.run('DELETE FROM invoices WHERE id = ?', [id]);
+  saveToFile();
+  return true;
+}
+
+module.exports = { initDB, getAllTodos, addTodo, toggleTodo, deleteTodo, getTodoById, updateTodoText, checkDuplicate, addInvoice, getAllInvoices, deleteInvoice };

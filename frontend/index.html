@@ -3,32 +3,126 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>任务待办 · Todo</title>
+    <title>发票识别登记系统</title>
   </head>
   <body>
     <div id="app">
-      <div class="container">
-        <h1>📋 我的任务</h1>
+      <!-- 顶部导航 -->
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="todo">📋 待办清单</button>
+        <button class="tab-btn" data-tab="invoice">🧾 发票管理</button>
+      </nav>
 
-        <div class="input-group">
-          <input type="text" id="todoInput" placeholder="输入一个新任务...">
-          <button id="addBtn">添加</button>
+      <!-- ========== Todo 页面 ========== -->
+      <div id="tab-todo" class="tab-page active">
+        <div class="container">
+          <h1>📋 我的任务</h1>
+          <div class="input-group">
+            <input type="text" id="todoInput" placeholder="输入一个新任务...">
+            <button id="addBtn">添加</button>
+          </div>
+          <div class="stats">
+            <span id="totalCount">总计：0</span>
+            <span id="doneCount">已完成：0</span>
+          </div>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="active">未完成</button>
+            <button class="filter-btn" data-filter="done">已完成</button>
+          </div>
+          <ul id="todoList"></ul>
+          <button id="clearBtn" class="clear-btn">清空已完成</button>
         </div>
+      </div>
 
-        <div class="stats">
-          <span id="totalCount">总计：0</span>
-          <span id="doneCount">已完成：0</span>
+      <!-- ========== 发票管理页面 ========== -->
+      <div id="tab-invoice" class="tab-page">
+        <div class="container invoice-container">
+          <h1>🧾 发票识别登记</h1>
+
+          <!-- 两种录入方式 -->
+          <div class="upload-methods">
+            <!-- 扫码上传 -->
+            <div class="method-card" id="scanBtn">
+              <div class="method-icon">📱</div>
+              <p>扫码录入</p>
+              <p class="hint">扫描发票二维码，秒出结果</p>
+            </div>
+            <!-- 文件上传 -->
+            <div class="method-card" id="uploadBtn">
+              <div class="method-icon">📷</div>
+              <p>上传文件</p>
+              <p class="hint">图片 / PDF</p>
+            </div>
+            <input type="file" id="invoiceFile" capture="environment" accept="image/*,application/pdf" hidden>
+          </div>
+
+          <!-- 扫码区域 -->
+          <div class="scanner-box" id="scannerBox" style="display:none;">
+            <div id="qrReader"></div>
+            <button class="btn-cancel" id="scanCancel">取消扫描</button>
+          </div>
+
+          <!-- 上传区（旧版，保留兼容） -->
+          <div class="upload-zone" id="uploadZone" style="display:none;">
+            <div class="upload-icon">📷</div>
+            <p>点击拍照或选择发票图片</p>
+            <p class="hint">支持增值税发票、电子发票</p>
+          </div>
+
+          <!-- 识别中 -->
+          <div class="loading-box" id="loadingBox" style="display:none;">
+            <div class="spinner"></div>
+            <p id="loadingText">正在识别发票信息...</p>
+          </div>
+
+          <!-- 识别结果 -->
+          <div class="result-box" id="resultBox" style="display:none;">
+            <h3>识别结果</h3>
+            <div class="result-preview">
+              <img id="previewImg" src="" alt="发票预览">
+            </div>
+            <div class="result-fields">
+              <div class="field">
+                <label>发票号码</label>
+                <input type="text" id="fInvoiceNo" placeholder="未识别">
+              </div>
+              <div class="field">
+                <label>购方名称（抬头）</label>
+                <input type="text" id="fTitle" placeholder="未识别">
+              </div>
+              <div class="field">
+                <label>纳税人识别号</label>
+                <input type="text" id="fTaxNo" placeholder="未识别">
+                <span class="field-status" id="taxStatus"></span>
+              </div>
+              <div class="field">
+                <label>销方名称</label>
+                <input type="text" id="fSeller" placeholder="未识别">
+              </div>
+              <div class="field">
+                <label>金额（元）</label>
+                <input type="text" id="fAmount" placeholder="未识别">
+              </div>
+              <div class="field">
+                <label>开票日期</label>
+                <input type="text" id="fDate" placeholder="未识别">
+              </div>
+            </div>
+            <div class="result-actions">
+              <button class="btn-cancel" id="btnCancel">取消</button>
+              <button class="btn-ocr" id="ocrFillBtn" style="display:none;">📷 拍照补全</button>
+              <button class="btn-save" id="btnSave">确认登记</button>
+            </div>
+            <div id="saveMsg" class="save-msg"></div>
+          </div>
+
+          <!-- 发票列表 -->
+          <h3 style="margin: 24px 0 12px; color: #2c3e50;">已登记发票</h3>
+          <div class="invoice-list" id="invoiceList">
+            <p class="empty-hint">暂无记录</p>
+          </div>
         </div>
-
-        <div class="filters">
-          <button class="filter-btn active" data-filter="all">全部</button>
-          <button class="filter-btn" data-filter="active">未完成</button>
-          <button class="filter-btn" data-filter="done">已完成</button>
-        </div>
-
-        <ul id="todoList"></ul>
-
-        <button id="clearBtn" class="clear-btn">清空已完成</button>
       </div>
     </div>
 
