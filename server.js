@@ -1,12 +1,14 @@
 // ========== 1. 引入依赖 ==========
 const express = require('express');
+const path = require('path');
 const { initDB, getAllTodos, addTodo, toggleTodo, deleteTodo, getTodoById, updateTodoText } = require('./db');
 
 const app = express();
 
 // ========== 2. 中间件配置 ==========
 app.use(express.json());
-app.use(express.static(__dirname));
+// 生产模式：提供打包后的前端文件；开发模式：Vite 单独启动
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
 // ========== 3. API 接口（全部改用数据库）==========
 
